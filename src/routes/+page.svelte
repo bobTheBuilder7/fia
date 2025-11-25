@@ -11,7 +11,9 @@
 			<Card.Title>Login to your account</Card.Title>
 			<Card.Description>Enter your email below to login to your account</Card.Description>
 			<Card.Action>
-				<Button variant="link">Sign Up</Button>
+				<Button variant="link" class="text-pink-500 hover:text-pink-600">
+                 Sign Up
+                </Button>
 			</Card.Action>
 		</Card.Header>
 		<Card.Content>
@@ -34,7 +36,11 @@
 			</form>
 		</Card.Content>
 		<Card.Footer class="flex-col gap-2">
-			<Button type="submit" class="w-full">Login</Button>
+			<Button
+            type="submit"
+            class="w-full text-white bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600"
+>    Login
+</Button>
 			<Button variant="outline" class="w-full">Login with Google</Button>
 		</Card.Footer>
 	</Card.Root>

@@ -8,15 +8,15 @@
 </script>
 
 <div class="flex h-full w-full">
-	<div class="flex h-full w-fit flex-col border-r p-4">
+	<div class="flex h-full w-24 flex-col border-r p-6 space-y-6">
 		<Button size="icon-lg" variant="ghost" href="/app">
-			<CircleQuestionMark class="size-5" />
+			<CircleQuestionMark class="size-7" />
 		</Button>
 		<Button size="icon-lg" variant="ghost" href="/app/posts">
-			<ScrollText class="size-5" />
+			<ScrollText class="size-7" />
 		</Button>
 		<Button size="icon-lg" variant="ghost" href="/app/users">
-			<Users class="size-5" />
+			<Users class="size-7" />
 		</Button>
 	</div>
 	<div class="flex h-full w-full flex-col overflow-x-hidden overflow-y-scroll p-4">
