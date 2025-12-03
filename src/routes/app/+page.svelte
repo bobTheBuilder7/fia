@@ -38,43 +38,41 @@
 </script>
 
 <div class="absolute top-4 right-7">
-    <img src="/logo.jpg" alt="FIA Logo" class="h-20 w-auto" />
+	<img src="/logo.jpg" alt="FIA Logo" class="h-20 w-auto" />
 </div>
-<div class="absolute inset-0 flex items-center justify-center pointer-events-none -z-50">
-    <img 
-        src="/grad_lines.png"
-        alt="Background lines"
-        class="opacity-100 w-[70%] max-w-10xl ml-18"
-    />
+<div class="pointer-events-none absolute inset-0 -z-50 flex items-center justify-center">
+	<img src="/grad_lines.png" alt="Background lines" class="max-w-10xl ml-18 w-full opacity-100" />
 </div>
 <div class="mx-auto flex h-full w-full max-w-3xl flex-col items-center justify-center">
-	<h1 class="text-4xl font-bold bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-transparent leading-[1.2] pb-2">
-        Welcome to Digital Think Tank!
-</h1>
-<InputGroup.Root 
-	class="mt-8 focus-within:[box-shadow:0_0_4px_rgb(255,_124,_229),0_0_8px_rgb(124,_200,_255)] rounded-xl"
->
-<textarea
-	    bind:value={query}
-       	placeholder="Ask, Search or Chat..."
-	    class="w-full text-lg placeholder:text-lg !text-lg border-none focus:outline-none bg-transparent resize-none py-4 px-4"
-></textarea>
+	<h1
+		class="bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text pb-2 text-4xl leading-[1.2] font-bold text-transparent"
+	>
+		Welcome to Digital Think Tank!
+	</h1>
+	<InputGroup.Root
+		class="mt-8 rounded-xl focus-within:[box-shadow:0_0_4px_rgb(255,_124,_229),0_0_8px_rgb(124,_200,_255)]"
+	>
+		<textarea
+			bind:value={query}
+			placeholder="Ask, Search or Chat..."
+			class="w-full resize-none border-none bg-transparent px-4 py-4 !text-lg text-lg placeholder:text-lg focus:outline-none"
+		></textarea>
 
-    <InputGroup.Addon align="block-end">
-        <InputGroup.Button
-            variant="default"
-            class="ml-auto cursor-pointer rounded-full p-2
-            bg-[#ff7ce5] text-white 
-            hover:bg-[#ff5ed9] transition shadow-md"
-            size="icon-xs"
-            onclick={localFindMovieScripts}
-            disabled={btnDisabled}
-        >
-            <ArrowUpIcon />
-            <span class="sr-only">Send</span>
-        </InputGroup.Button>
-    </InputGroup.Addon>
-</InputGroup.Root>
+		<InputGroup.Addon align="block-end">
+			<InputGroup.Button
+				variant="default"
+				class="ml-auto cursor-pointer rounded-full bg-[#ff7ce5]
+            p-2 text-white 
+            shadow-md transition hover:bg-[#ff5ed9]"
+				size="icon-xs"
+				onclick={localFindMovieScripts}
+				disabled={btnDisabled}
+			>
+				<ArrowUpIcon />
+				<span class="sr-only">Send</span>
+			</InputGroup.Button>
+		</InputGroup.Addon>
+	</InputGroup.Root>
 	<div class="mt-5 flex flex-col">
 		{#each options as script}
 			<button
