@@ -33,7 +33,6 @@
 			}
 
 			localStorage.setItem('apiKey', key);
-			// window.location.href = '/app'; // optional redirect
 		} catch (e) {
 			errorMsg = e instanceof Error ? e.message : 'Login failed.';
 		} finally {
@@ -71,7 +70,6 @@
 			</Card.Header>
 
 			<Card.Content>
-				<!-- ✅ runes mode: use `onsubmit`, not `on:submit` -->
 				<form onsubmit={(e) => { e.preventDefault(); handleLogin(); }}>
 					<div class="grid gap-2">
 						<div class="flex items-center justify-between">
@@ -118,3 +116,4 @@
 		</Card.Root>
 	</div>
 </div>
+
