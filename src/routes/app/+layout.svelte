@@ -9,12 +9,10 @@
 
 <div class="flex h-full w-full">
 	<div class="flex h-full w-24 flex-col items-center border-r border-slate-200/70 bg-white/70 p-4 backdrop-blur-xl space-y-4">
-		<!-- FIA Logo -->
 		<img src="/logo.jpg" alt="FIA Logo" class="h-12 w-12 rounded-2xl object-cover shadow-sm" />
 
 		<div class="h-px w-10 bg-slate-200/80" />
 
-		<!-- Home -->
 		<Button
 			size="icon-lg"
 			variant="ghost"
@@ -24,7 +22,6 @@
 			<Home class="size-7 text-pink-300" />
 		</Button>
 
-		<!-- Posts -->
 		<Button
 			size="icon-lg"
 			variant="ghost"
@@ -34,7 +31,6 @@
 			<ScrollText class="size-7 text-pink-300" />
 		</Button>
 
-		<!-- Users -->
 		<Button
 			size="icon-lg"
 			variant="ghost"
@@ -49,3 +45,4 @@
 		{@render children()}
 	</div>
 </div>
+
