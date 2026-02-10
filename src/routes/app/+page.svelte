@@ -13,11 +13,13 @@
 	let query = $state('titanic');
 	let options = $state<string[]>([]);
 
+	const suggestions = ['titanic', 'inception', 'the godfather', 'interstellar', 'fight club', 'parasite'];
+
 	async function localFindMovieScripts() {
 		btnDisabled = true;
+		options = [];
 		try {
 			options = await findMovieScripts({ query });
-			console.log(options);
 		} catch (err) {
 			handleError(err);
 		}
@@ -29,7 +31,7 @@
 		try {
 			const script = await analyzeMovieScript({ scriptUrl });
 			console.log(script);
-			toast.success('Success');
+			toast.success('Analysis complete');
 		} catch (err) {
 			handleError(err);
 		}
@@ -37,49 +39,110 @@
 	}
 </script>
 
-<div class="absolute top-4 right-7">
-	<img src="/logo.jpg" alt="FIA Logo" class="h-20 w-auto" />
-</div>
-<div class="pointer-events-none absolute inset-0 -z-50 flex items-center justify-center">
-	<img src="/grad_lines.png" alt="Background lines" class="max-w-10xl ml-18 w-full opacity-100" />
-</div>
-<div class="mx-auto flex h-full w-full max-w-3xl flex-col items-center justify-center">
-	<h1
-		class="bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text pb-2 text-4xl leading-[1.2] font-bold text-transparent"
-	>
-		Welcome to Digital Think Tank!
-	</h1>
-	<InputGroup.Root
-		class="mt-8 rounded-xl focus-within:[box-shadow:0_0_4px_rgb(255,_124,_229),0_0_8px_rgb(124,_200,_255)]"
-	>
-		<textarea
-			bind:value={query}
-			placeholder="Ask, Search or Chat..."
-			class="w-full resize-none border-none bg-transparent px-4 py-4 !text-lg text-lg placeholder:text-lg focus:outline-none"
-		></textarea>
+<div class="mx-auto flex h-full w-full max-w-5xl flex-col items-center justify-center">
+	<div class="relative w-full max-w-3xl">
+		<div class="absolute -inset-[1px] rounded-3xl bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 opacity-80 blur-[2px]"></div>
 
-		<InputGroup.Addon align="block-end">
-			<InputGroup.Button
-				variant="default"
-				class="ml-auto cursor-pointer rounded-full bg-[#ff7ce5]
-            p-2 text-white 
-            shadow-md transition hover:bg-[#ff5ed9]"
-				size="icon-xs"
-				onclick={localFindMovieScripts}
-				disabled={btnDisabled}
+		<div class="relative rounded-3xl border border-slate-200/60 bg-white/80 p-8 shadow-xl backdrop-blur">
+			<div class="flex items-center gap-3">
+				<span class="inline-flex items-center rounded-full bg-slate-900 px-3 py-1 text-xs font-medium text-white">
+					Digital Think Tank
+				</span>
+				<span class="text-xs text-slate-500">Script Search + Analysis</span>
+			</div>
+
+			<h1 class="mt-4 text-4xl font-extrabold leading-tight text-slate-900">
+				Find a movie script, then<br />
+				analyze it in seconds.
+			</h1>
+
+			<p class="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600">
+				Type a movie name to fetch available scripts. Then click any result to run analysis.
+			</p>
+
+			<Separator class="my-6" />
+
+			<InputGroup.Root
+				class="rounded-2xl border border-slate-200 bg-white focus-within:border-slate-300 focus-within:[box-shadow:0_0_0_4px_rgba(236,72,153,0.12),0_0_0_8px_rgba(59,130,246,0.10)]"
 			>
-				<ArrowUpIcon />
-				<span class="sr-only">Send</span>
-			</InputGroup.Button>
-		</InputGroup.Addon>
-	</InputGroup.Root>
-	<div class="mt-5 flex flex-col">
-		{#each options as script}
-			<button
-				disabled={btnDisabled}
-				onclick={async () => await localAnalyzeMovieScripts(script)}
-				class="cursor-pointer">{script}</button
-			>
-		{/each}
+				<textarea
+					bind:value={query}
+					placeholder="Ask, Search or Chat..."
+					rows="2"
+					class="w-full resize-none border-none bg-transparent px-4 py-4 text-base text-slate-900 placeholder:text-slate-400 focus:outline-none"
+				></textarea>
+
+				<InputGroup.Addon align="block-end">
+					<InputGroup.Button
+						variant="default"
+						class="ml-auto mr-2 mb-2 cursor-pointer rounded-full p-3
+            bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500
+            text-white shadow-md shadow-pink-500/20 hover:opacity-95 active:scale-[0.98] transition"
+						size="icon-xs"
+						onclick={localFindMovieScripts}
+						disabled={btnDisabled}
+					>
+						<ArrowUpIcon />
+						<span class="sr-only">Search</span>
+					</InputGroup.Button>
+				</InputGroup.Addon>
+			</InputGroup.Root>
+
+			<div class="mt-4 flex flex-wrap gap-2">
+				{#each suggestions as s}
+					<button
+						type="button"
+						class="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-700 hover:bg-slate-50 transition"
+						disabled={btnDisabled}
+						onclick={() => (query = s)}
+					>
+						{s}
+					</button>
+				{/each}
+			</div>
+
+			{#if btnDisabled}
+				<div class="mt-4 flex items-center gap-2 text-sm text-slate-600">
+					<span class="h-2 w-2 animate-pulse rounded-full bg-pink-500"></span>
+					Working...
+				</div>
+			{/if}
+
+			{#if options.length > 0}
+				<Separator class="my-6" />
+
+				<div class="flex items-center justify-between">
+					<h2 class="text-sm font-semibold text-slate-900">Results</h2>
+					<p class="text-xs text-slate-500">{options.length} found</p>
+				</div>
+
+				<div class="mt-4 grid gap-3">
+					{#each options as script}
+						<button
+							type="button"
+							disabled={btnDisabled}
+							onclick={async () => await localAnalyzeMovieScripts(script)}
+							class="group flex w-full items-start justify-between gap-4 rounded-2xl border border-slate-200 bg-white px-4 py-4 text-left transition
+                 hover:bg-slate-50 hover:border-slate-300 active:scale-[0.995]"
+						>
+							<div class="min-w-0">
+								<p class="truncate text-sm font-medium text-slate-900">{script}</p>
+								<p class="mt-1 text-xs text-slate-500">Click to analyze this script</p>
+							</div>
+
+							<span class="shrink-0 rounded-full border border-slate-200 bg-white p-2 text-slate-700 group-hover:bg-slate-50 transition">
+								<PlusIcon class="h-4 w-4" />
+							</span>
+						</button>
+					{/each}
+				</div>
+			{:else}
+				<div class="mt-6 rounded-2xl border border-slate-200 bg-white px-4 py-3">
+					<p class="text-sm text-slate-600">
+						Tip: search by movie title (e.g., <span class="font-medium text-slate-900">Titanic</span>).
+					</p>
+				</div>
+			{/if}
+		</div>
 	</div>
 </div>
